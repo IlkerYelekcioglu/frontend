@@ -2,22 +2,21 @@ import { useEffect, useMemo, useState } from "react";
 import { signUp } from "./api";
 import { Input } from "./components/Input";
 import { useTranslation } from "react-i18next";
-import { axiosError } from "axios";
-import { LanguageSelector } from "../../shared/components/LanguageSelector";
+import { Alert } from "@/shared/components/Alert";
+import { Spinner } from "@/shared/components/Spinner";
 
 export function SignUp() {
   const [username, setUsername] = useState(); //Bu bir React Hook
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordRepeat, setPasswordRepeat] = useState();
-  const [apiProgress, setApiProgress] = useState(false);
+  const [apiProgress, setApiProgress] = useState();
   const [successMessage, setSuccessMessage] = useState();
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState();
+  const { t } = useTranslation();
 
   //useEffect hook kısmını kullan.React hooklara bak
-
-  const { t } = useTranslation();
 
   useEffect(() => {
     setErrors(function (lastErrors) {
@@ -57,12 +56,13 @@ export function SignUp() {
         password,
       });
       setSuccessMessage(response.data.message);
-    } catch (axiosError) {
-      if (
-        axiosError.response?.data &&
-        axiosError.response.data.status === 400
-      ) {
-        setErrors(axiosError.response.data.validationErrors);
+    } catch (AxiosError) {
+      if (AxiosError.response?.data) {
+        if (AxiosError.response.data.status === 400) {
+          setErrors(AxiosError.response.data.validationErrors);
+        } else {
+          setGeneralError(AxiosError.response.data.me);
+        }
       } else {
         setGeneralError(t("genericError"));
       }
@@ -117,7 +117,8 @@ fonksiyona dışarıdan erişilebilmesi için export kullanımı gerekmektedir.
               type="password"
               onChange={(event) => setPasswordRepeat(event.target.value)}
             />
-            {successMessage && <div>{successMessage}</div>}
+            {successMessage && <Alert>{successMessage}</Alert>}
+            {generalError && <Alert styşeType="danger">{generalError}</Alert>}
 
             <div className="text-center">
               <button
@@ -126,18 +127,12 @@ fonksiyona dışarıdan erişilebilmesi için export kullanımı gerekmektedir.
                   apiProgress || !password || password !== passwordRepeat
                 }
               >
-                {apiProgress && (
-                  <span
-                    className="spinner-border spinner-border-sm"
-                    aria-hidden="true"
-                  ></span>
-                )}
-                Sign Up
+                {apiProgress && <Spinner sm={true} />}
+                {t("signUp")}
               </button>
             </div>
           </div>
         </form>
-        <LanguageSelector />
       </div>
     </div>
   );
