@@ -25,7 +25,7 @@ export default createBrowserRouter([
         Component: Activation,
       },
       {
-        path: "/user/{id}",
+        path: "/user/:id",
         Component: User,
       },
     ],
