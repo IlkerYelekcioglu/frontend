@@ -6,5 +6,6 @@
   "passwordRepeat": "Şifre Tekrari",
   "passwordMissmatch": "Şifreniz Eşleşmiyor",
   "genericError": "Beklenmedik bir hata oluştu.Lütfen tekrar deneyiniz",
-  "userNotFoundError": "Kullanici bulunamadi"
+  "userNotFoundError": "Kullanici bulunamadi",
+  "login": "Giris Yap"
 }
