@@ -5,7 +5,7 @@ import { Spinner } from "@/shared/components/Spinner";
 import { Input } from "@/shared/components/Input";
 import { Button } from "@/shared/components/Button";
 
-export function Login() {
+export function Login(onLoginSuccess) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [apiProgress, setApiProgress] = useState();
@@ -33,28 +33,23 @@ export function Login() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    setSuccessMessage();
     setGeneralError();
     setApiProgress(true);
     try {
-      //   const response = await signUp({
-      //     username,
-      //     email,
-      //     password,
-      //   });
-      //   setSuccessMessage(response.data.message);
+      await login({ email, password });
+      onLoginSuccess(response.data.user);
     } catch (AxiosError) {
-      //   if (AxiosError.response?.data) {
-      //     if (AxiosError.response.data.status === 400) {
-      //       setErrors(AxiosError.response.data.validationErrors);
-      //     } else {
-      //       setGeneralError(AxiosError.response.data.me);
-      //     }
-      //   } else {
-      //     setGeneralError(t("genericError"));
-      //   }
+      if (AxiosError.response?.data) {
+        if (AxiosError.response.data.status === 400) {
+          setErrors(AxiosError.response.data.validationErrors);
+        } else {
+          setGeneralError(AxiosError.response.data.message);
+        }
+      } else {
+        setGeneralError(t("genericError"));
+      }
     } finally {
-      //   setApiProgress(false);
+      setApiProgress(false);
     }
   };
 
