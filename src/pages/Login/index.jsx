@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert } from "@/shared/components/Alert";
-import { Spinner } from "@/shared/components/Spinner";
 import { Input } from "@/shared/components/Input";
 import { Button } from "@/shared/components/Button";
+import { useNavigate } from "react-router-dom";
+import { login } from "./api";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "@/shared/state/redux";
 
-export function Login(onLoginSuccess) {
+export function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [apiProgress, setApiProgress] = useState();
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  // const dispatch = useAuthDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setErrors(function (lastErrors) {
@@ -36,8 +42,10 @@ export function Login(onLoginSuccess) {
     setGeneralError();
     setApiProgress(true);
     try {
-      await login({ email, password });
-      onLoginSuccess(response.data.user);
+      const response = await login({ email, password });
+      // dispatch({ type: "login-success", data: response.data.user });
+      dispatch(loginSuccess(response.data.user));
+      navigate("/");
     } catch (AxiosError) {
       if (AxiosError.response?.data) {
         if (AxiosError.response.data.status === 400) {
@@ -80,15 +88,6 @@ export function Login(onLoginSuccess) {
               <Button disabled={!email && !password} apiProgress={apiProgress}>
                 {t("login")}
               </Button>
-              {/* <button
-                className="btn-btn-primary"
-                disabled={
-                  apiProgress || !password || password !== passwordRepeat
-                }
-              >
-                {apiProgress && <Spinner sm={true} />}
-                {t("login")}
-              </button> */}
             </div>
           </div>
         </form>

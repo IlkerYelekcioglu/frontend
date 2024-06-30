@@ -1,17 +1,17 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { LanguageSelector } from "./shared/components/LanguageSelector";
 import { Navbar } from "./shared/components/Navbar";
-import { useState } from "react";
 function App() {
   return (
-    <>
+    // <AuthenticationContext>
+    <Provider store={store}>
       <Navbar />
       <div className="container mt-3">
-        {/* <Login onLoginSuccess={onLoginSuccess} /> */}
         <Outlet />
         <LanguageSelector />
       </div>
-    </>
+    </Provider>
+    // </AuthenticationContext>
   );
 }
 

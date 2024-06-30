@@ -1,12 +1,19 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import logo from "@/assets/hoaxify.png";
-import { useContext } from "react";
-import { AuthContext } from "../state/context";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutSuccess } from "../state/redux";
 
 export function Navbar() {
   const { t } = useTranslation();
-  const authState = useContext(AuthContext);
+  // const authState = useAuthState();
+  // const dispatch = useAuthDispatch();
+  const authState = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const onClickLogout = () => {
+    authState.dispatch(logoutSuccess());
+  };
   return (
     <nav className="navbar  navbar-expand bg-body-tertiary shadow-sm">
       <div className="container-fluid">
@@ -37,7 +44,11 @@ export function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <span className="nav-link" role="button">
+                <span
+                  className="nav-link"
+                  role="button"
+                  onClick={onClickLogout}
+                >
                   Logout
                 </span>
               </li>
