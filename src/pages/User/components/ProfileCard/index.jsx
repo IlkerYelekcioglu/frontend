@@ -1,9 +1,9 @@
 import defaultProfileImage from "@/assets/profile.png";
 import { Button } from "@/shared/components/Button";
-import { AuthContext } from "@/shared/state/context";
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 export function ProfileCard({ user }) {
-  const authState = useContext(AuthContext);
+  // const authState = useAuthState();
+  const authState = useSelector((store) => store.auth);
   return (
     <div className="card">
       <div className="card-header text-center">
