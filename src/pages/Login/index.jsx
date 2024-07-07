@@ -43,8 +43,8 @@ export function Login() {
     setApiProgress(true);
     try {
       const response = await login({ email, password });
-      // dispatch({ type: "login-success", data: response.data.user });
-      dispatch(loginSuccess(response.data.user));
+      dispatch({ type: "login-success", data: response.data });
+      // dispatch(loginSuccess(response.data.user));
       navigate("/");
     } catch (AxiosError) {
       if (AxiosError.response?.data) {
