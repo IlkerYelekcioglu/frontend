@@ -14,19 +14,23 @@ export function useAuthDispatch() {
 }
 const authReducer = (authState, action) => {
   switch (action.type) {
-    case "login-success": {
+    case "login-success":
       setToken(action.data.token);
       return action.data.user;
-    }
-    case "logout-success": {
+
+    case "logout-success":
       return { id: 0 };
-    }
+
+    case "user-update-success":
+      return {
+        ...authState,
+        username: action.data.username,
+      };
     default:
       throw new Error(`unknown action: ${action.type}`);
   }
 };
 export function AuthenticationContext({ children }) {
-  // const   [auth, setAuth] = useState(loadAuthState());
   const [authState, dispatch] = useReducer(authReducer, loadAuthState());
 
   useEffect(() => {
