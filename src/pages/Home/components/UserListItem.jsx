@@ -1,4 +1,3 @@
-import defaultProfileImage from "@/assets/profile.png";
 import { ProfileImage } from "@/shared/components/profileImage";
 import { Link } from "react-router-dom";
 
