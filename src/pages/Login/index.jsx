@@ -44,7 +44,6 @@ export function Login() {
     try {
       const response = await login({ email, password });
       dispatch({ type: "login-success", data: response.data });
-      // dispatch(loginSuccess(response.data.user));
       navigate("/");
     } catch (AxiosError) {
       if (AxiosError.response?.data) {

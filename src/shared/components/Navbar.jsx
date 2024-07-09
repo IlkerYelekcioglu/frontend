@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import logo from "@/assets/hoaxify.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../state/redux";
+import { ProfileImage } from "./profileImage";
 
 export function Navbar() {
   const { t } = useTranslation();
-  // const authState = useAuthState();
-  // const dispatch = useAuthDispatch();
   const authState = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -40,7 +39,8 @@ export function Navbar() {
             <>
               <li className="nav-item">
                 <Link className="nav-link" to={`/user/${authState.id}`}>
-                  My Profile
+                  <ProfileImage width={30} />
+                  <span>{authState.username}</span>
                 </Link>
               </li>
               <li className="nav-item">
