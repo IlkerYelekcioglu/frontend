@@ -1,7 +1,7 @@
 import { Button } from "@/shared/components/Button";
 import { useState } from "react";
-import { ProfileImage } from "@/shared/components/profileImage";
-import { UserEditForm } from "./userEditForm";
+import { ProfileImage } from "@/shared/components/ProfileImage";
+import { UserEditForm } from "../ProfileCard/UserEditForm";
 import { useAuthState } from "@/shared/state/context";
 
 export function ProfileCard({ user }) {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "@/assets/hoaxify.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../state/redux";
-import { ProfileImage } from "./profileImage";
+import { ProfileImage } from "@/shared/components/ProfileImage";
 
 export function Navbar() {
   const { t } = useTranslation();

@@ -3,7 +3,6 @@ import { signUp } from "./api";
 import { Input } from "@/shared/components/Input";
 import { useTranslation } from "react-i18next";
 import { Alert } from "@/shared/components/Alert";
-import { Spinner } from "@/shared/components/Spinner";
 import { Button } from "@/shared/components/Button";
 
 export function SignUp() {
@@ -16,8 +15,6 @@ export function SignUp() {
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState();
   const { t } = useTranslation();
-
-  //useEffect hook kısmını kullan.React hooklara bak
 
   useEffect(() => {
     setErrors(function (lastErrors) {
@@ -128,15 +125,6 @@ fonksiyona dışarıdan erişilebilmesi için export kullanımı gerekmektedir.
               >
                 {t("signUp")}
               </Button>
-              {/* <button
-                className="btn-btn-primary"
-                disabled={
-                  apiProgress || !password || password !== passwordRepeat
-                }
-              >
-                {apiProgress && <Spinner sm={true} />}
-                {t("signUp")}
-              </button> */}
             </div>
           </div>
         </form>

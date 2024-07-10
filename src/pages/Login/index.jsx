@@ -6,7 +6,6 @@ import { Button } from "@/shared/components/Button";
 import { useNavigate } from "react-router-dom";
 import { login } from "./api";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "@/shared/state/redux";
 
 export function Login() {
   const [email, setEmail] = useState();
@@ -16,7 +15,7 @@ export function Login() {
   const [generalError, setGeneralError] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  // const dispatch = useAuthDispatch();
+
   const dispatch = useDispatch();
 
   useEffect(() => {

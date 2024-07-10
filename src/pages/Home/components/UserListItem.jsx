@@ -1,4 +1,4 @@
-import { ProfileImage } from "@/shared/components/profileImage";
+import { ProfileImage } from "@/shared/components/ProfileImage";
 import { Link } from "react-router-dom";
 
 export function UserListItem({ user }) {

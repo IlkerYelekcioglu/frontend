@@ -1,5 +1,3 @@
-import { Component, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { getUser } from "./api";
 import { Alert } from "@/shared/components/Alert";
 import { Spinner } from "@/shared/components/Spinner";
