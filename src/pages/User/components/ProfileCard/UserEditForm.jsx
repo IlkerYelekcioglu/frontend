@@ -1,12 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from "@/shared/state/context";
 import { Alert } from "@/shared/components/Alert";
 import { Input } from "@/shared/components/Input";
 import { Button } from "@/shared/components/Button";
 import { updateUser } from "./api";
 
-export function UserEditForm() {
+export function UserEditForm(setEditMode, setTempImage) {
   const authState = useAuthState();
   const { t } = useTranslation();
   const [newUsername, setNewUsername] = useState(authState.username);
@@ -14,15 +14,44 @@ export function UserEditForm() {
   const [errors, setErrors] = useState({});
   const [generalError, setGeneralError] = useState();
   const dispatch = useAuthDispatch();
+  const [newImage, setNewImage] = useState();
 
   const onChangeUsername = (event) => {
     setNewUsername(event.target.value);
-    setErrors({});
+    setErrors(function (lastErrors) {
+      return {
+        ...lastErrors,
+        username: undefined,
+      };
+    });
+    useEffect(() => {}, [username]);
   };
 
   const onClickCancel = () => {
     setEditMode(false);
     setNewUsername(authState.username);
+    setNewImage();
+    setTempImage();
+  };
+
+  const onSelectImage = (event) => {
+    setErrors(function (lastErrors) {
+      return {
+        ...lastErrors,
+        image: undefined,
+      };
+    });
+    if (event.target.files.length < 1) return;
+    const file = event.target.files[0];
+    const fileReader = new FileReader();
+
+    fileReader.onloadend = () => {
+      const data = fileReader.result;
+      setNewImage(data);
+      setTempImage(data);
+    };
+
+    fileReader.readAsDataURL(file);
   };
 
   const onSubmit = async () => {
@@ -30,10 +59,13 @@ export function UserEditForm() {
     setErrors({});
     setGeneralError();
     try {
-      await updateUser(authState.id, { username: newUsername });
+      const { data } = await updateUser(authState.id, {
+        username: newUsername,
+        image: newImage,
+      });
       dispatch({
         type: "user-update-success",
-        data: { username: newUsername },
+        data: { username: data.username, image: data.image },
       });
       setEditMode(false);
     } catch (AxiosError) {
@@ -57,6 +89,12 @@ export function UserEditForm() {
         defaultValue={authState.username}
         onChange={onChangeUsername}
         error={errors.username}
+      />
+      <Input
+        label="Profile Image"
+        type="file"
+        onChange={onSelectImage}
+        error={errors.image}
       />
       {generalError && <Alert styleType="danger">{generalError}</Alert>}
       <Button apiProgress={apiProgress} onClick={onClickSave}>
