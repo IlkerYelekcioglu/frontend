@@ -15,7 +15,6 @@ export function Login() {
   const [generalError, setGeneralError] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   useEffect(() => {
