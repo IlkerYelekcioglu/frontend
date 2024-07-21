@@ -10,25 +10,6 @@ export function Activation() {
     "token",
     activateUser
   );
-  // const { token } = useParams();
-  // const [apiProgress, setApiProgress] = useState();
-  // const [successMessage, setSuccessMessage] = useState();
-  // const [errorMessage, setErrorMessage] = useState();
-  // useEffect(() => {
-  //   async function activate() {
-  //     setApiProgress(true);
-  //     try {
-  //       const response = await activateUser(token);
-  //       setSuccessMessage(response.data.message);
-  //     } catch (AxiosError) {
-  //       setErrorMessage(AxiosError.response.data.message);
-  //     } finally {
-  //       setApiProgress(false);
-  //     }
-  //   }
-  //   activate();
-  // }, [token]);
-
   return (
     <>
       {apiProgress && (

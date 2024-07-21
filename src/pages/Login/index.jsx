@@ -3,9 +3,9 @@ import { useTranslation } from "react-i18next";
 import { Alert } from "@/shared/components/Alert";
 import { Input } from "@/shared/components/Input";
 import { Button } from "@/shared/components/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { login } from "./api";
-import { useDispatch } from "react-redux";
+import { useAuthDispatch } from "@/shared/state/context";
 
 export function Login() {
   const [email, setEmail] = useState();
@@ -15,7 +15,7 @@ export function Login() {
   const [generalError, setGeneralError] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAuthDispatch();
 
   useEffect(() => {
     setErrors(function (lastErrors) {

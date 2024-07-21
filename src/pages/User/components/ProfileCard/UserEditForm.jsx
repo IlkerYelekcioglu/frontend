@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { useAuthState } from "@/shared/state/context";
+import { useAuthState, useAuthDispatch } from "@/shared/state/context";
 import { Alert } from "@/shared/components/Alert";
 import { Input } from "@/shared/components/Input";
 import { Button } from "@/shared/components/Button";
