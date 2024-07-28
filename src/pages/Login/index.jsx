@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Alert } from "@/shared/components/Alert";
 import { Input } from "@/shared/components/Input";
 import { Button } from "@/shared/components/Button";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { login } from "./api";
 import { useAuthDispatch } from "@/shared/state/context";
 

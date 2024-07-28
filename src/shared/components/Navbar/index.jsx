@@ -1,22 +1,27 @@
+import logo from "@/assets/hoaxify.png";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import logo from "@/assets/hoaxify.png";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutSuccess } from "../state/redux";
-import { ProfileImage } from "@/shared/components/ProfileImage";
+import { useAuthDispatch, useAuthState } from "../../state/context";
+import { ProfileImage } from "../ProfileImage";
+import { logout } from "./api";
 
 export function Navbar() {
   const { t } = useTranslation();
-  const authState = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const authState = useAuthState();
+  const dispatch = useAuthDispatch();
 
-  const onClickLogout = () => {
-    authState.dispatch(logoutSuccess());
+  const onClickLogout = async () => {
+    try {
+      await logout();
+    } catch {
+    } finally {
+      dispatch({ type: "logout-success" });
+    }
   };
   return (
-    <nav className="navbar  navbar-expand bg-body-tertiary shadow-sm">
+    <nav className="navbar navbar-expand bg-body-tertiary shadow-sm">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="#">
+        <Link className="navbar-brand" to="/">
           <img src={logo} width={60} />
           Hoaxify
         </Link>
@@ -29,7 +34,7 @@ export function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/signUp">
+                <Link className="nav-link" to="/signup">
                   {t("signUp")}
                 </Link>
               </li>
@@ -40,7 +45,7 @@ export function Navbar() {
               <li className="nav-item">
                 <Link className="nav-link" to={`/user/${authState.id}`}>
                   <ProfileImage width={30} image={authState.image} />
-                  <span>{authState.username}</span>
+                  <span className="ms-1">{authState.username}</span>
                 </Link>
               </li>
               <li className="nav-item">
